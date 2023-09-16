@@ -1,8 +1,12 @@
 
-	import org.openqa.selenium.By;
-	import org.openqa.selenium.WebDriver;
+	import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 	import org.openqa.selenium.WebElement;
-	import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 	public class SportsPage{
 		
 		public void read(WebDriver driver) throws InterruptedException {
@@ -22,7 +26,26 @@
 			//Insert the search bar text
 		    driver.findElement(By.id("ybar-sbq")).sendKeys("NFL");
 		    //clicking the search bar
-		    driver.findElement(By.id("NFL")).click();
+		    //driver.findElement(By.id("NFL")).click();
+		    Thread.sleep(10000);
+		    
+		    //The driver coouldn't find the element despite it is exists on page
+		    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		    try {
+		    	wait.until(ExpectedConditions.textToBe(By.className("._itemTitleOnly_xszgl_199._itemTitle_xszgl_186._Ell_xszgl_157"), "NFL"));
+		    } catch (TimeoutException e) {
+		    	System.out.println("No element has been found");
+		    	e.printStackTrace();
+		    } finally {
+		    	driver.close();
+		    }
+		    
+		    //Several attempts we tried to do in order to try make it working :(
+		    
+		    //driver.findElement(By.className(className)).click();
+		    //driver.findElement(By.xpath("//div[@class=(text(),'._itemTitleOnly_xszgl_199._itemTitle_xszgl_186._Ell_xszgl_157')]")).click();
+		    //driver.findElement(By.className("._itemTitleOnly_xszgl_199._itemTitle_xszgl_186._Ell_xszgl_157")).click();
+		     //$('._itemTitleOnly_xszgl_199._itemTitle_xszgl_186._Ell_xszgl_157').click()
 		    
 		   // driver.findElement(By.id()).click();
 		  //Insert the search bar text
